@@ -1,0 +1,26 @@
+version: "3.7"
+
+services:
+    # api_service:
+    #     build: .
+    #     ports:
+    #         - 8080:8080
+    #     environment:
+    #         SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/user_list?autoReconnect=true&useSSL=false
+    #     depends_on:
+    #         - db
+    db:
+        image: mysql:8.4
+        ports:
+            - 3306:3306
+        volumes:
+            - ./docker/mysql/data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: shop
+            MYSQL_PASSWORD: root
+    # client:
+    #     container_name: user-client
+    #     image: front
+    #     ports:
+    #         - 3000:3000
