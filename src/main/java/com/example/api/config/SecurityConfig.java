@@ -1,9 +1,7 @@
 package com.example.api.config;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,11 +18,8 @@ import lombok.AllArgsConstructor;
 @EnableMethodSecurity
 @AllArgsConstructor
 public class SecurityConfig {
-
-    private UserDetailsService userDetailsService;
-
+    private final UserDetailsService userDetailsService;
     private final JwtAuthenticationEntryPoint authenticationEntryPoint;
-
     private final JwtAuthenticationFilter authenticationFilter;
 
     @Bean
@@ -34,13 +29,13 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-        http.csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests((authorize) -> {
-                    authorize.requestMatchers("/api/auth/**").permitAll();
-                    authorize.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
-                    authorize.anyRequest().authenticated();
-                }).httpBasic(Customizer.withDefaults());
+        http.csrf(csrf -> csrf.disable()) // Отключите CSRF для REST API
+            .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/", "/api/public/**", "/api/auth/**").permitAll() // Общедоступные страницы
+                .requestMatchers("/api/admin/**").hasRole("ADMIN") // Страницы только для администратора
+                .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN") // Страницы для зарегистрированных пользователей 
+                .anyRequest().authenticated() // Все остальные запросы требуют аутентификацию
+            );
 
         http.exceptionHandling( exception -> exception
                 .authenticationEntryPoint(authenticationEntryPoint));
