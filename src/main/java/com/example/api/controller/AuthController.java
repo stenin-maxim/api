@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.api.model.User;
 import com.example.api.payload.AuthResponseDto;
 import com.example.api.payload.LoginDto;
+import com.example.api.payload.RegisterDto;
 import com.example.api.service.AuthService;
 
 import lombok.AllArgsConstructor;
@@ -35,5 +37,14 @@ public class AuthController {
 
         //03 - Return the response to the user
         return new ResponseEntity<>(authResponseDto, HttpStatus.OK);
+    }
+
+    // Build Registr REST API
+    @PostMapping("/register")
+    public ResponseEntity<User> register(@RequestBody RegisterDto RegisterDto){
+        User registeredUser = authService.register(RegisterDto);
+
+        System.out.println(registeredUser);
+        return ResponseEntity.ok(registeredUser);
     }
 }
