@@ -44,7 +44,6 @@ public class AuthController {
     public ResponseEntity<User> register(@RequestBody RegisterDto RegisterDto){
         User registeredUser = authService.register(RegisterDto);
 
-        System.out.println(registeredUser);
         return ResponseEntity.ok(registeredUser);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.api.model;
 
 import java.util.Date;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -47,6 +48,11 @@ public class Role {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
+    private Set<User> users;
+
+    public Role(RoleEnum name) {
+        this.name = name;
+    }
 
     public Long getId() {
         return id;
