@@ -50,6 +50,8 @@ public class Role {
     )
     private Set<User> users;
 
+    public Role() {}
+
     public Role(RoleEnum name) {
         this.name = name;
     }

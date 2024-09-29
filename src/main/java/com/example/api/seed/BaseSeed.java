@@ -43,7 +43,8 @@ public class BaseSeed implements CommandLineRunner {
         if (categoryRepository.count() == 0) {
             ArrayList<Category> categories = new ArrayList<>();
 
-            categories.add(new Category(0, "Личные вещи"));
+            categories.add(new Category(null, "Личные вещи"));
+
             categories.add(new Category(1, "Одежда, обувь, аксессуары"));
             categories.add(new Category(1, "Детская одежда и обувь"));
             categories.add(new Category(1, "Товары для детей и игрушки"));
@@ -70,16 +71,16 @@ public class BaseSeed implements CommandLineRunner {
             categories.add(new Category(4, "Товары для купания"));
             categories.add(new Category(4, "Товары для школы"));
             
-            categories.add(new Category(4, "Приборы и аксессуары"));
-            categories.add(new Category(4, "Парфюмерия"));
-            categories.add(new Category(4, "Средства гигиены"));
-            categories.add(new Category(4, "Косметика"));
-            categories.add(new Category(4, "Средства для волос"));
-            categories.add(new Category(4, "Медицинские изделия"));
+            categories.add(new Category(5, "Приборы и аксессуары"));
+            categories.add(new Category(5, "Парфюмерия"));
+            categories.add(new Category(5, "Средства гигиены"));
+            categories.add(new Category(5, "Косметика"));
+            categories.add(new Category(5, "Средства для волос"));
+            categories.add(new Category(5, "Медицинские изделия"));
 
-            categories.add(new Category(4, "Ювелирные изделия"));
-            categories.add(new Category(4, "Часы"));
-            categories.add(new Category(4, "Бижутерия"));
+            categories.add(new Category(6, "Ювелирные изделия"));
+            categories.add(new Category(6, "Часы"));
+            categories.add(new Category(6, "Бижутерия"));
 
             categories.add(new Category(7, "Верхняя одежда"));
             categories.add(new Category(7, "Платья"));
