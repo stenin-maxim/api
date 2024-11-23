@@ -44,7 +44,7 @@ public class Role {
 
     @ManyToMany
     @JoinTable(
-        name = "user_roles",
+        name = "user_role",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
@@ -94,6 +94,14 @@ public class Role {
     public Role setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
         return this;
+    }
+
+    public Set<User> getUsers() {
+        return this.users;
+    }
+
+    public void setUsers(User user) {
+        this.users.add(user);
     }
 
     @Override

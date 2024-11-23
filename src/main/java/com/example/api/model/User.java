@@ -1,5 +1,6 @@
 package com.example.api.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -11,6 +12,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,16 +22,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.Data;
 
 @Entity
-@Data
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @Column(nullable = false, name="id")
     private Long id;
 
     @Column(nullable = false, length = 45)
@@ -53,22 +54,33 @@ public class User implements UserDetails {
     private Date updatedAt;
     
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles",
+    @JoinTable(name = "user_role",
         joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private Set<Role> roles = new HashSet<>();
+    private final Set<Role> roles = new HashSet<>();
 
-    public void addRole(Role role) {
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private final List<Ad> adList = new ArrayList<>();
+
+    public List<Ad> getAds() {
+        return this.adList;
+    }
+
+    public void setAds(Ad ad) {
+        this.adList.add(ad);
+        ad.setUser(this);
+    }
+
+    public Set<Role> getRoles() {
+        return this.roles;
+    }
+
+    public void setRoles(Role role) {
         this.roles.add(role);
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
-    }
-
-    public User setId(long id) {
-        this.id = id;
-        return this;
     }
 
     public String getName() {

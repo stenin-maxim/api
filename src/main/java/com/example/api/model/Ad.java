@@ -24,7 +24,7 @@ public class Ad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    private Integer id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name ="user_id", nullable = false, referencedColumnName = "id")
@@ -58,7 +58,7 @@ public class Ad {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
