@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.api.dto.AuthResponseDto;
+import com.example.api.dto.LoginDto;
+import com.example.api.dto.RegisterDto;
 import com.example.api.model.User;
-import com.example.api.payload.AuthResponseDto;
-import com.example.api.payload.LoginDto;
-import com.example.api.payload.RegisterDto;
 import com.example.api.service.AuthService;
 
 import lombok.AllArgsConstructor;

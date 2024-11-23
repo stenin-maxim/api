@@ -1,4 +1,4 @@
-package com.example.api.payload;
+package com.example.api.dto;
 
 import lombok.Data;
 

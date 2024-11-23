@@ -11,11 +11,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.api.config.JwtTokenProvider;
+import com.example.api.dto.LoginDto;
+import com.example.api.dto.RegisterDto;
 import com.example.api.enums.RoleEnum;
 import com.example.api.model.Role;
 import com.example.api.model.User;
-import com.example.api.payload.LoginDto;
-import com.example.api.payload.RegisterDto;
 import com.example.api.repository.RoleRepository;
 import com.example.api.repository.UserRepository;
 import com.example.api.service.AuthService;
@@ -77,7 +77,7 @@ public class AuthServiceImpl implements AuthService {
             .setEmail(input.getEmail())
             .setPassword(passwordEncoder.encode(input.getPassword()));
 
-        user.addRole(optionalRole.get());
+        user.setRoles(optionalRole.get());
             
         return userRepository.save(user);
     }
