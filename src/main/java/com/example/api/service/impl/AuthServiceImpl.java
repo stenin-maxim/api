@@ -65,18 +65,17 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public User register(RegisterDto input) {
+    public User register(RegisterDto registerDto) {
         Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.ROLE_USER);
 
         if (optionalRole.isEmpty()) {
             return null;
         }
 
-        User user = new User()
-            .setName(input.getName())
-            .setEmail(input.getEmail())
-            .setPassword(passwordEncoder.encode(input.getPassword()));
-
+        User user = new User();
+        user.setName(registerDto.getName());
+        user.setEmail(registerDto.getEmail());
+        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
         user.setRoles(optionalRole.get());
             
         return userRepository.save(user);

@@ -33,13 +33,13 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/", "/api/public/**", "/api/auth/**").permitAll() // Общедоступные страницы
                 .requestMatchers("/api/admin/**").hasRole("ADMIN") // Страницы только для администратора
-                .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN") // Страницы для зарегистрированных пользователей 
+                .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN") // Страницы для зарегистрированных пользователей
                 .anyRequest().authenticated() // Все остальные запросы требуют аутентификацию
             );
-
+            
+        http.logout((logout) -> logout.logoutUrl("/api/auth/logout").logoutSuccessUrl("/").permitAll());
         http.exceptionHandling( exception -> exception
                 .authenticationEntryPoint(authenticationEntryPoint));
-
         http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
