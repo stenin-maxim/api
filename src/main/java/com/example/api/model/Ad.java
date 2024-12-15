@@ -1,8 +1,11 @@
 package com.example.api.model;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,8 +31,12 @@ public class Ad {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name ="user_id", nullable = false, referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private User user;
+
+    @Column(columnDefinition = "boolean default false")
+    private Boolean status;
 
     @Column(length = 60)
     @NotBlank // проверяет что строка не пуста
@@ -37,14 +44,14 @@ public class Ad {
 
     @Column(length = 60)
     @NotBlank
-    private String type_ad;
+    private String typeAd;
 
     @Column(length = 60)
     @NotBlank
     private String state;
 
     @Column(length = 60)
-    private String link_video;
+    private String linkVideo;
 
     @Column(columnDefinition="text", length = 500)
     private String description;
@@ -62,13 +69,21 @@ public class Ad {
         return id;
     }
 
-    public User getUser(User user) {
-        return this.user;
+    public Long getUser() {
+        return this.user.getId();
     }
 
     public User setUser(User user) {
         this.user = user;
         return this.user;
+    }
+
+    public Boolean getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     public String getName() {
@@ -80,11 +95,11 @@ public class Ad {
     }
 
     public String getTypeAd() {
-        return this.type_ad;
+        return this.typeAd;
     }
 
-    public void setTypeAd(String type_ad) {
-        this.type_ad = type_ad;
+    public void setTypeAd(String typeAd) {
+        this.typeAd = typeAd;
     }
 
     public String getState() {
@@ -96,11 +111,11 @@ public class Ad {
     }
 
     public String getLinkVideo() {
-        return this.link_video;
+        return this.linkVideo;
     }
 
-    public void setLinkVideo(String link_video) {
-        this.link_video = link_video;
+    public void setLinkVideo(String linkVideo) {
+        this.linkVideo = linkVideo;
     }
 
     public String getDescription() {
@@ -125,5 +140,39 @@ public class Ad {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof Ad))
+            return false;
+        Ad ad = (Ad) o;
+            return Objects.equals(this.id, ad.id) && Objects.equals(this.status, ad.status) && Objects.equals(this.name, ad.name)
+                && Objects.equals(this.typeAd, ad.typeAd) && Objects.equals(this.state, ad.state) && Objects.equals(this.linkVideo, ad.linkVideo) 
+                && Objects.equals(this.description, ad.description) && Objects.equals(this.price, ad.price) && Objects.equals(this.createdAt, ad.createdAt)
+                && Objects.equals(this.updatedAt, ad.updatedAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.id, this.status, this.name, this.typeAd, this.state, this.linkVideo, this.description, this.price, this.createdAt, this.updatedAt);
+    }
+
+    @Override
+    public String toString() {
+        return "Ad {" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", status='" + name + '\'' +
+                ", typeAd='" + typeAd + '\'' +
+                ", state='" + state + '\'' +
+                ", linkVideo='" + linkVideo + '\'' +
+                ", description='" + description + '\'' +
+                ", price='" + price + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 }
