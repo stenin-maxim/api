@@ -97,6 +97,11 @@
 			<version>0.12.6</version>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- А зависимость commons-lang3 предназначена для использования служебного класса, который генерирует случайные буквенно-цифровые строки (используемые в качестве идентификатора файла или кода файла). -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
