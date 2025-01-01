@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,13 +18,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.api.model.Ad;
+import com.example.api.model.User;
 import com.example.api.repository.AdRepository;
+import com.example.api.repository.UserRepository;
 
 @RestController
 @RequestMapping(value = "/api/user", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdController {
     @Autowired
     AdRepository adRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @GetMapping("/ads")
     public ResponseEntity<List<Ad>> getAllAds() {
@@ -39,6 +46,11 @@ public class AdController {
 
     @PostMapping(value = "/create-ad", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Ad> createNewAd(@RequestBody Ad ad) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByEmail(email).orElseThrow(() ->
+                new UsernameNotFoundException("User not exists by Username or Email"));
+                
+        ad.setUser(user);
         adRepository.save(ad);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
