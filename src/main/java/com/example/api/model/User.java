@@ -60,7 +60,7 @@ public class User implements UserDetails {
     private final Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private final List<Ad> adList = new ArrayList<>(); 
+    private final List<Ad> adList = new ArrayList<>();
 
     public List<Ad> getAds() {
         return this.adList;

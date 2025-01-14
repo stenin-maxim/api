@@ -165,7 +165,7 @@ public class Ad {
         return "Ad {" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", status='" + name + '\'' +
+                ", status='" + status + '\'' +
                 ", typeAd='" + typeAd + '\'' +
                 ", state='" + state + '\'' +
                 ", linkVideo='" + linkVideo + '\'' +
