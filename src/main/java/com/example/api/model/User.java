@@ -23,6 +23,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -62,6 +63,11 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private final List<Ad> adList = new ArrayList<>();
 
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private UserPhoto userPhoto;
+
+    public User() {}
+
     public List<Ad> getAds() {
         return this.adList;
     }
@@ -77,6 +83,14 @@ public class User implements UserDetails {
 
     public void setRoles(Role role) {
         this.roles.add(role);
+    }
+
+    public UserPhoto getUserPhoto() {
+        return this.userPhoto;
+    }
+
+    public void setUserPhoto(UserPhoto userPhoto) {
+        this.userPhoto = userPhoto;
     }
 
     public Long getId() {

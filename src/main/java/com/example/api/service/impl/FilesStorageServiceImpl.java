@@ -47,14 +47,14 @@ public class FilesStorageServiceImpl implements FileStorageService {
         String fileCode = RandomStringUtils.randomAlphanumeric(8);
         String newFileName = fileCode + "-" + fileName;
         UserPhoto userPhoto = new UserPhoto();
-        UserPhoto userPhotoObj = userPhotoRepo.findUserPhoto(user.getId());
+        UserPhoto userPhotoObj = user.getUserPhoto();
         String path = "uploads/user/" + Long.toString(user.getId()) + "/avatar/";
         Path filePath = Paths.get(path).resolve(newFileName);
 
         if (userPhotoObj == null) {
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
     
-            userPhoto.setUser(user.getId());
+            userPhoto.setUser(user);
             userPhoto.setName(newFileName);
             userPhoto.setSize(file.getSize());
             userPhoto.setPath(path);

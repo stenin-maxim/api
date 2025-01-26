@@ -65,6 +65,8 @@ public class Ad {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    public Ad() {}
+
     public Long getId() {
         return id;
     }

@@ -5,11 +5,16 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,7 +24,11 @@ public class UserPhoto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name="id")
     private Long id;
-    private Long user_id;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonIgnore
+    private User user;
 
     @Column(nullable = false, length = 255)
     private String name;
@@ -33,12 +42,14 @@ public class UserPhoto {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    public UserPhoto() {}
+
     public Long getId() {
         return id;
     }
 
-    public Long getUser() {
-        return this.user_id;
+    public User getUser() {
+        return this.user;
     }
 
     public String getName() {
@@ -61,9 +72,8 @@ public class UserPhoto {
         return updatedAt;
     }
 
-    public Long setUser(Long user_id) {
-        this.user_id = user_id;
-        return this.user_id;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setName(String name) {
@@ -82,7 +92,7 @@ public class UserPhoto {
     public String toString() {
         return "Ad {" +
                 "id=" + id +
-                ", user_id='" + user_id + '\'' +
+                ", user_id='" + user + '\'' +
                 ", name='" + name + '\'' +
                 ", size='" + size + '\'' +
                 ", path='" + path + '\'' +
