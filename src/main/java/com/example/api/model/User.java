@@ -66,6 +66,9 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private UserPhoto userPhoto;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private final List<Favorites> favorites = new ArrayList<>();
+
     public User() {}
 
     public List<Ad> getAds() {
@@ -91,6 +94,14 @@ public class User implements UserDetails {
 
     public void setUserPhoto(UserPhoto userPhoto) {
         this.userPhoto = userPhoto;
+    }
+
+    public List<Favorites> getFavorites() {
+        return this.favorites;
+    }
+
+    public void setFavorites(Favorites favorites) {
+        this.favorites.add(favorites);
     }
 
     public Long getId() {

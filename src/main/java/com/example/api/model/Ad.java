@@ -1,15 +1,16 @@
 package com.example.api.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -18,6 +19,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
@@ -28,12 +30,6 @@ public class Ad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name ="user_id", nullable = false, referencedColumnName = "id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private User user;
 
     @Column(columnDefinition = "boolean default false")
     private Boolean status;
@@ -65,6 +61,14 @@ public class Ad {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name ="user_id", nullable = false, referencedColumnName = "id")
+    @JsonIgnore
+    private User user;
+
+    @OneToMany(mappedBy = "ad", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private final List<Favorites> favorites = new ArrayList<>();;
+
     public Ad() {}
 
     public Long getId() {
@@ -78,6 +82,14 @@ public class Ad {
     public User setUser(User user) {
         this.user = user;
         return this.user;
+    }
+
+    public List<Favorites> getFavorites() {
+        return this.favorites;
+    }
+
+    public void setFavorites(Favorites favorites) {
+        this.favorites.add(favorites);
     }
 
     public Boolean getStatus() {
