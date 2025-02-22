@@ -69,6 +69,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private final List<Favorites> favorites = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private final List<Review> reviews = new ArrayList<>();
+
     public User() {}
 
     public List<Ad> getAds() {
@@ -77,7 +80,6 @@ public class User implements UserDetails {
 
     public void setAds(Ad ad) {
         this.adList.add(ad);
-        ad.setUser(this);
     }
 
     public Set<Role> getRoles() {
@@ -102,6 +104,14 @@ public class User implements UserDetails {
 
     public void setFavorites(Favorites favorites) {
         this.favorites.add(favorites);
+    }
+
+    public List<Review> getReviews() {
+        return this.reviews;
+    }
+
+    public void setReviews(Review review) {
+        this.reviews.add(review);
     }
 
     public Long getId() {
