@@ -1,9 +1,10 @@
 package com.example.api.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import com.example.api.dto.ReviewDto;
+import com.example.api.dto.ReviewCreateDto;
 import com.example.api.exception.NotFoundException;
 import com.example.api.model.Ad;
 import com.example.api.model.Review;
@@ -12,18 +13,20 @@ import com.example.api.repository.AdRepository;
 import com.example.api.repository.ReviewRepository;
 import com.example.api.repository.UserRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ReviewService {
-    @Autowired
-    private ReviewRepository reviewRepository;
+    private final ReviewRepository reviewRepository;
+    private final UserRepository userRepository;
+    private final AdRepository adRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    public List<Review> getAllReviews() {
+        return reviewRepository.findAll();
+    }
 
-    @Autowired
-    private AdRepository adRepository;
-
-    public void create(ReviewDto reviewDto) {
+    public void createReview(ReviewCreateDto reviewDto) {
         User user = userRepository.findById(reviewDto.getUserId())
             .orElseThrow(() -> new NotFoundException("Пользователь не найден!"));
         Ad ad = adRepository.findById(reviewDto.getAdId())

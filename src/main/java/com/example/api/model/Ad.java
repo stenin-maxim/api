@@ -67,7 +67,7 @@ public class Ad {
     private User user;
 
     @OneToMany(mappedBy = "ad", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private final List<Favorites> favorites = new ArrayList<>();;
+    private final List<Favorites> favorites = new ArrayList<>();
 
     public Ad() {}
 

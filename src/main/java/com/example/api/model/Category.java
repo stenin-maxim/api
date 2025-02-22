@@ -46,6 +46,22 @@ public class Category {
         this.name = name;
     }
 
+    public Category getParentCategory() {
+        return this.parentCategory;
+    }
+
+    public void setParentCategory(Category parentCategory) {
+        this.parentCategory = parentCategory;
+    }
+
+    public List<Category> getChildCategories() {
+        return this.childCategories;
+    }
+
+    public void setChildCategories (Category childCategories) {
+        this.childCategories.add(childCategories);
+    }
+
     public Integer getId() {
         return id;
     }
