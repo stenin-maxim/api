@@ -1,13 +1,13 @@
 package com.example.api.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.Builder;
 
 @Getter
 @Setter
 @Builder
-public class ReviewDto {
+public class ReviewCreateDto {
     private Long userId;
     private Long adId;
     private Byte rating;
