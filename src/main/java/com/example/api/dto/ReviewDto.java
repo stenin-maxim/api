@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class ReviewResponseDto {
+public class ReviewDto {
     private Long id;
     private UserDto user;
     private Ad ad;
