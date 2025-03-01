@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.api.dto.UserDto;
+import com.example.api.entity.User;
 import com.example.api.mapper.UserMapper;
-import com.example.api.model.User;
 import com.example.api.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;

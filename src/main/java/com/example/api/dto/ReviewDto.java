@@ -2,7 +2,7 @@ package com.example.api.dto;
 
 import java.time.LocalDate;
 
-import com.example.api.model.Ad;
+import com.example.api.entity.Ad;
 
 import lombok.Builder;
 import lombok.Getter;

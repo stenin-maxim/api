@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.api.model.UserPhoto;
+import com.example.api.entity.UserPhoto;
 
 public interface FileStorageService {
     public UserPhoto upload(MultipartFile file) throws IOException;

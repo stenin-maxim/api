@@ -14,9 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.api.entity.User;
+import com.example.api.entity.UserPhoto;
 import com.example.api.exception.FileStorageException;
-import com.example.api.model.User;
-import com.example.api.model.UserPhoto;
 import com.example.api.repository.UserPhotoRepository;
 import com.example.api.repository.UserRepository;
 import com.example.api.service.FileStorageService;

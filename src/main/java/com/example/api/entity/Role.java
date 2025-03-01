@@ -1,4 +1,4 @@
-package com.example.api.model;
+package com.example.api.entity;
 
 import java.util.Date;
 import java.util.HashSet;

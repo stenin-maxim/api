@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.api.dto.ReviewCreateDto;
+import com.example.api.entity.Ad;
+import com.example.api.entity.Review;
+import com.example.api.entity.User;
 import com.example.api.exception.NotFoundException;
-import com.example.api.model.Ad;
-import com.example.api.model.Review;
-import com.example.api.model.User;
 import com.example.api.repository.AdRepository;
 import com.example.api.repository.ReviewRepository;
 import com.example.api.repository.UserRepository;

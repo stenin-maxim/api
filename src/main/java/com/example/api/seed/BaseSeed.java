@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import com.example.api.entity.Category;
+import com.example.api.entity.Role;
 import com.example.api.enums.RoleEnum;
-import com.example.api.model.Category;
-import com.example.api.model.Role;
 import com.example.api.repository.CategoryRepository;
 import com.example.api.repository.RoleRepository;
 

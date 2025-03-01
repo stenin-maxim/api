@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.api.dto.ReviewCreateDto;
 import com.example.api.dto.ReviewDto;
+import com.example.api.entity.Review;
 import com.example.api.mapper.ReviewMapper;
-import com.example.api.model.Review;
 import com.example.api.service.ReviewService;
 
 import jakarta.validation.Valid;
@@ -32,7 +32,7 @@ public class ReviewController {
     @GetMapping("/")
     public List<ReviewDto> getAllReviews() {
         List<Review> review = reviewService.getAllReviews();
-        return reviewMapper.toDto(review);
+        return reviewMapper.toReviewDtos(review);
     }
     
     @PostMapping

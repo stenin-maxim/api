@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.example.api.model.Favorites;
+import com.example.api.entity.Favorites;
 
 public interface FavoritesRepository extends JpaRepository<Favorites, Long> {
     @Query(value = "SELECT f.id, f.ad_id, f.user_id, ads.name, ads.price FROM Favorites f LEFT JOIN ads ON f.ad_id = ads.id WHERE f.user_id = :user_id", nativeQuery = true)

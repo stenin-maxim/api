@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.api.model.Ad;
-import com.example.api.model.Favorites;
-import com.example.api.model.User;
+import com.example.api.entity.Ad;
+import com.example.api.entity.Favorites;
+import com.example.api.entity.User;
 import com.example.api.repository.AdRepository;
 import com.example.api.repository.FavoritesRepository;
 import com.example.api.repository.UserRepository;
