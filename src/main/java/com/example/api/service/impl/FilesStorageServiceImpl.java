@@ -21,15 +21,13 @@ import com.example.api.repository.UserPhotoRepository;
 import com.example.api.repository.UserRepository;
 import com.example.api.service.FileStorageService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Service
 public class FilesStorageServiceImpl implements FileStorageService {
     private final UserRepository userRepo;
     private final UserPhotoRepository userPhotoRepo;
-
-    public FilesStorageServiceImpl(UserRepository userRepo, UserPhotoRepository userPhotoRepo) {
-        this.userRepo = userRepo;
-        this.userPhotoRepo = userPhotoRepo;
-    }
 
     @Transactional(rollbackFor = {IOException.class})
     @Override
@@ -49,6 +47,11 @@ public class FilesStorageServiceImpl implements FileStorageService {
         UserPhoto userPhoto = new UserPhoto();
         UserPhoto userPhotoObj = user.getUserPhoto();
         String path = "uploads/user/" + Long.toString(user.getId()) + "/avatar/";
+
+        if (!Files.exists(Paths.get(path))) {
+            Files.createDirectories(Paths.get(path));
+        }
+
         Path filePath = Paths.get(path).resolve(newFileName);
 
         if (userPhotoObj == null) {

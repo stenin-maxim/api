@@ -69,7 +69,8 @@ public class Ad {
     @OneToMany(mappedBy = "ad", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private final List<Favorites> favorites = new ArrayList<>();
 
-    public Ad() {}
+    @OneToMany(mappedBy = "ad", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    private final List<AdPhoto> adPhotos = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -90,6 +91,14 @@ public class Ad {
 
     public void setFavorites(Favorites favorites) {
         this.favorites.add(favorites);
+    }
+
+    public List<AdPhoto> getAdPhotos() {
+        return this.adPhotos;
+    }
+
+    public void setAdPhotos(AdPhoto adPhoto) {
+        this.adPhotos.add(adPhoto);
     }
 
     public Boolean getStatus() {

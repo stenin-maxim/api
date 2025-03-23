@@ -9,5 +9,6 @@ import com.example.api.entity.Ad;
 
 @Mapper(componentModel = "spring")
 public interface AdMapper {
-    public List<AdDto> toAdDtos(List<Ad> posts);
+    public List<AdDto> toAdDtos(List<Ad> ads);
+    public AdDto toAdDto(Ad ad);
 }

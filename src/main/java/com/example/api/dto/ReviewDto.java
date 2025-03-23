@@ -15,7 +15,7 @@ public class ReviewDto {
     private Long id;
     private UserDto user;
     private Ad ad;
-    private String text;
     private String rating;
+    private String text;
     private LocalDate createdAt;
 }

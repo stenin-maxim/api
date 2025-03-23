@@ -1,11 +1,10 @@
 package com.example.api.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.io.IOException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,67 +12,46 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.example.api.dto.AdDto;
 import com.example.api.entity.Ad;
-import com.example.api.entity.User;
-import com.example.api.repository.AdRepository;
-import com.example.api.repository.UserRepository;
+import com.example.api.mapper.AdMapper;
+import com.example.api.service.AdPhotoService;
+
+import lombok.RequiredArgsConstructor;
+
 
 @RestController
-@RequestMapping(value = "/api/user", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequiredArgsConstructor
+@RequestMapping(value = "/api/user/ad", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdController {
-    @Autowired
-    AdRepository adRepository;
+    private final AdPhotoService adPhotoService;
+    private final AdMapper adMapper;
 
-    @Autowired
-    UserRepository userRepository;
-
-    // @GetMapping("/ads")
-    // public ResponseEntity<List<Ad>> getAllAds() {
-    //     List<Ad> ads = adRepository.findAll();
-    //     return new ResponseEntity<>(ads, HttpStatus.OK);
-    // }
-
-    @GetMapping("/ad/{id}")
-    public ResponseEntity<Ad> getAdById(@PathVariable long id) {
-        Ad ad = adRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Not found Ad with id = " + id));
-        return new ResponseEntity<>(ad, HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<AdDto> getAdById(@PathVariable long id) {
+        Ad ad = adPhotoService.getAdById(id);
+        return new ResponseEntity<>(adMapper.toAdDto(ad), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/create-ad", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Ad> createNewAd(@RequestBody Ad ad) {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userRepository.findByEmail(email).orElseThrow(() ->
-                new UsernameNotFoundException("User not exists by Username or Email"));
-                
-        ad.setUser(user);
-        adRepository.save(ad);
+    @PostMapping
+    public ResponseEntity<Ad> createAd(@RequestParam("data") String jsonObject, @RequestParam MultipartFile[] files) throws IOException {
+        adPhotoService.createAd(jsonObject, files);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/update-ad/{id}")
-    public ResponseEntity<Ad> updateAd(@RequestBody Ad newAd, @PathVariable Long id) {
-        adRepository.findById(id)
-            .map(ad -> {
-                ad.setStatus(newAd.getStatus());
-                ad.setName(newAd.getName());
-                ad.setTypeAd(newAd.getTypeAd());
-                ad.setState(newAd.getState());
-                ad.setLinkVideo(newAd.getLinkVideo());
-                ad.setDescription(newAd.getDescription());
-                ad.setPrice(newAd.getPrice());
-
-                return adRepository.save(ad);
-            });
-
+    @PutMapping("/{id}")
+    public ResponseEntity<Ad> updateAd(@RequestBody Ad ad, @PathVariable Long id) {
+        adPhotoService.updateAd(ad, id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping(value="/delete-ad/{id}")
-    public ResponseEntity<Ad> deleteAd(@PathVariable long id) {
-        adRepository.deleteById(id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Ad> deleteAd(@PathVariable Long id) throws IOException {
+        adPhotoService.deleteAd(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
