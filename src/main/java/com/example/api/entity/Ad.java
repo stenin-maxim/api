@@ -36,7 +36,7 @@ public class Ad {
 
     @Column(length = 60)
     @NotBlank // проверяет что строка не пуста
-    private String name;
+    private String title;
 
     @Column(length = 60)
     @NotBlank
@@ -53,6 +53,9 @@ public class Ad {
     private String description;
 
     private Integer price;
+
+    @Column(length = 40)
+    private String location;
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -109,12 +112,12 @@ public class Ad {
         this.status = status;
     }
 
-    public String getName() {
-        return this.name;
+    public String getTitle() {
+        return this.title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getTypeAd() {
@@ -157,6 +160,14 @@ public class Ad {
         this.price = price;
     }
 
+    public String getLocation() {
+        return this.location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -172,7 +183,7 @@ public class Ad {
         if (!(o instanceof Ad))
             return false;
         Ad ad = (Ad) o;
-            return Objects.equals(this.id, ad.id) && Objects.equals(this.status, ad.status) && Objects.equals(this.name, ad.name)
+            return Objects.equals(this.id, ad.id) && Objects.equals(this.status, ad.status) && Objects.equals(this.title, ad.title)
                 && Objects.equals(this.typeAd, ad.typeAd) && Objects.equals(this.state, ad.state) && Objects.equals(this.linkVideo, ad.linkVideo) 
                 && Objects.equals(this.description, ad.description) && Objects.equals(this.price, ad.price) && Objects.equals(this.createdAt, ad.createdAt)
                 && Objects.equals(this.updatedAt, ad.updatedAt);
@@ -180,20 +191,21 @@ public class Ad {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.status, this.name, this.typeAd, this.state, this.linkVideo, this.description, this.price, this.createdAt, this.updatedAt);
+        return Objects.hash(this.id, this.status, this.title, this.typeAd, this.state, this.linkVideo, this.description, this.price, this.createdAt, this.updatedAt);
     }
 
     @Override
     public String toString() {
         return "Ad {" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", title='" + title + '\'' +
                 ", status='" + status + '\'' +
                 ", typeAd='" + typeAd + '\'' +
                 ", state='" + state + '\'' +
                 ", linkVideo='" + linkVideo + '\'' +
                 ", description='" + description + '\'' +
                 ", price='" + price + '\'' +
+                ", location='" + location + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';

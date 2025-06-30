@@ -85,12 +85,13 @@ public class AdPhotoService {
         adRepository.findById(id)
             .map(ad -> {
                 ad.setStatus(newAd.getStatus());
-                ad.setName(newAd.getName());
+                ad.setTitle(newAd.getTitle());
                 ad.setTypeAd(newAd.getTypeAd());
                 ad.setState(newAd.getState());
                 ad.setLinkVideo(newAd.getLinkVideo());
                 ad.setDescription(newAd.getDescription());
                 ad.setPrice(newAd.getPrice());
+                ad.setLocation(newAd.getLocation());
 
                 return adRepository.save(ad);
             });

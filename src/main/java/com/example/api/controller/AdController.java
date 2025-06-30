@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.api.dto.AdDto;
 import com.example.api.entity.Ad;
-import com.example.api.mapper.AdMapper;
 import com.example.api.service.AdPhotoService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,13 +26,6 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping(value = "/api/user/ad", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdController {
     private final AdPhotoService adPhotoService;
-    private final AdMapper adMapper;
-
-    @GetMapping("/{id}")
-    public ResponseEntity<AdDto> getAdById(@PathVariable long id) {
-        Ad ad = adPhotoService.getAdById(id);
-        return new ResponseEntity<>(adMapper.toAdDto(ad), HttpStatus.OK);
-    }
 
     @PostMapping
     public ResponseEntity<Ad> createAd(@RequestParam("data") String jsonObject, @RequestParam MultipartFile[] files) throws IOException {

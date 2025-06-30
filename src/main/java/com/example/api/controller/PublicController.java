@@ -24,6 +24,7 @@ import com.example.api.mapper.AdMapper;
 import com.example.api.repository.AdPhotoRepository;
 import com.example.api.repository.AdRepository;
 import com.example.api.repository.CategoryRepository;
+import com.example.api.service.AdPhotoService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,6 +36,7 @@ public class PublicController {
     private final AdRepository adRepository;
     private final AdMapper adMapper;
     private final AdPhotoRepository adPhotoRepository;
+    private final AdPhotoService adPhotoService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin")
@@ -53,6 +55,12 @@ public class PublicController {
     public ResponseEntity<List<AdDto>> getAllAds() {
         List<Ad> ads = adRepository.findAll();
         return new ResponseEntity<>(adMapper.toAdDtos(ads), HttpStatus.OK);
+    }
+
+    @GetMapping("/ad/{id}")
+    public ResponseEntity<AdDto> getAdById(@PathVariable long id) {
+        Ad ad = adPhotoService.getAdById(id);
+        return new ResponseEntity<>(adMapper.toAdDto(ad), HttpStatus.OK);
     }
 
     @GetMapping("/image/{id}")

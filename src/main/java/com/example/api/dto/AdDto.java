@@ -12,9 +12,10 @@ import lombok.Setter;
 @Builder
 public class AdDto {
     private Long id;
-    private String name;
+    private String title;
     private String typeAd;
     private Integer price;
+    private String location;
     private List<AdPhotoDto> adPhotos;
     private LocalDateTime createdAt;
 }
